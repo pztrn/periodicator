@@ -1,0 +1,14 @@
+gitlab:
+  base_url: "https://gitlab.com"
+  token: "aaabbbccc"
+
+tasks:
+  - title: "Test"
+    body: |
+      This is a multiline
+      task
+      body
+    tags: ["test label"]
+    execution_start: "2021-09-01 00:00:00"
+    cron: "00 5 * * fri"
+    due_in: "24h"
