@@ -1,14 +1,37 @@
+# Gitlab's configuration.
 gitlab:
+  # Base URL (a.k.a. "protocol and domain") for your Gitlab installation.
   base_url: "https://gitlab.com"
+  # Personal access token with "api" access.
   token: "aaabbbccc"
 
+# Tasks list to create. It is using YAML's lists.
 tasks:
+  # Task's title.
   - title: "Test"
+    # Task's body. Can be multiline.
+    body: |
+      This is a multiline
+      task
+      body
+
+    # Tags (or labels) to attach.
+    tags: ["test label"]
+    # Task's starting point. From this timestamp "internal cron" will start to calculate task creation timestamp and other
+    # things.
+    execution_start: "2021-09-01 00:00:00"
+    # Internal cron interval. For this example 2021-09-01 is wednesday, so task will be created on 2021-09-03 and
+    # then on 2021-09-10 and so on.
+    cron: "00 5 * * fri"
+    # Due date to set in future. For this example task will be created on 2021-09-03 and due date will be set to 2021-09-04.
+    due_in: "24h"
+
+  - title: "Another Test"
     body: |
       This is a multiline
       task
       body
     tags: ["test label"]
     execution_start: "2021-09-01 00:00:00"
-    cron: "00 5 * * fri"
+    cron: "00 5 * * sat"
     due_in: "24h"
