@@ -10,6 +10,9 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Version automagically fills when building or running using Makefile.
+var Version = "unknown"
+
 // Config is a global configuration structure.
 type Config struct {
 	Gitlab gitlab.Config  `yaml:"gitlab"`

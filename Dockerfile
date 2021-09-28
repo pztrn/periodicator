@@ -4,7 +4,7 @@ WORKDIR /go/src/go.dev.pztrn.name/periodicator
 COPY . .
 
 ENV CGO_ENABLED=0
-RUN go build -o periodicator .
+RUN apk add make && make build
 
 FROM alpine:latest
 LABEL maintainer="Stanislav N. <pztrn@pztrn.name>"

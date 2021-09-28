@@ -15,7 +15,7 @@ tasks:
       task
       body
 
-    # Tags (or labels) to attach.
+    # Tags (or labels) to attach. This is a list.
     tags: ["test label"]
     # Task's starting point. From this timestamp "internal cron" will start to calculate task creation timestamp and other
     # things.
@@ -27,11 +27,10 @@ tasks:
     due_in: "24h"
 
   - title: "Another Test"
-    body: |
-      This is a multiline
-      task
-      body
-    tags: ["test label"]
+    body: "This is a single-line body.<br><br>Markdown might be supported, or not ``¯\_(ツ)_/¯``"
+    # Another way to specify tags or labels.
+    tags:
+      - "test label"
     execution_start: "2021-09-01 00:00:00"
     cron: "00 5 * * sat"
     due_in: "24h"
