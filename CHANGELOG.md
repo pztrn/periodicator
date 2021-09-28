@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added license information. We're on MIT.
+
 ## [0.1.0] - 2021-09-29
 
 - Initial release with ability to create issues on Gitlab (both hosted and self-hosted).
