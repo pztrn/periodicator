@@ -3,12 +3,13 @@ module go.dev.pztrn.name/periodicator
 go 1.17
 
 require (
-	github.com/robfig/cron v1.2.0
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/xanzy/go-gitlab v0.51.1
 	gopkg.in/yaml.v2 v2.2.2
 )
 
 require (
+	github.com/adhocore/gronx v0.2.5 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect

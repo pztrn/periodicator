@@ -11,7 +11,10 @@ import (
 	"go.dev.pztrn.name/periodicator/internal/tasks"
 )
 
-var showVersion = flag.Bool("version", false, "Show version information and exit")
+var (
+	showNextCreationTS = flag.Bool("show-next-creation-ts", false, "Show tasks next creation timestamps")
+	showVersion        = flag.Bool("version", false, "Show version information and exit")
+)
 
 func main() {
 	flag.Parse()
@@ -27,6 +30,11 @@ func main() {
 	cfg := config.Parse()
 
 	c := gitlab.NewGitlabClient(&cfg.Gitlab)
+
+	if *showNextCreationTS {
+		tasks.PrintCreationTSes(c, cfg.Tasks)
+		os.Exit(0)
+	}
 
 	tasks.Process(c, cfg.Tasks)
 }

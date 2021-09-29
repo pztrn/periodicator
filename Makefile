@@ -12,6 +12,11 @@ run:
 	GPT_CONFIG=$(CONFIG) ./periodicator
 	rm periodicator
 
+run-show-next-creation-ts:
+	go build -ldflags $(LINKER_FLAGS) -o periodicator .
+	GPT_CONFIG=$(CONFIG) ./periodicator -show-next-creation-ts
+	rm periodicator
+
 run-version:
 	go build -ldflags $(LINKER_FLAGS) -o periodicator .
 	GPT_CONFIG=$(CONFIG) ./periodicator -version

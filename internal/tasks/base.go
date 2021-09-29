@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/robfig/cron"
+	"github.com/robfig/cron/v3"
 	g "github.com/xanzy/go-gitlab"
 	"go.dev.pztrn.name/periodicator/internal/gitlab"
 )
@@ -39,6 +39,37 @@ func (b *BaseTask) checkIfOpenedTaskExists(issues []*g.Issue) bool {
 	return foundAndNotClosed
 }
 
+func (b *BaseTask) getIssues() ([]*g.Issue, error) {
+	// nolint:wrapcheck
+	return b.client.GetIssuesByTitle(b.projectID, b.title)
+}
+
+func (b *BaseTask) getLastCreationTimestamp(issues []*g.Issue) time.Time {
+	lastTaskCreationTS := b.executionStartTimestamp
+
+	for _, issue := range issues {
+		if issue.ClosedAt != nil && issue.CreatedAt.After(lastTaskCreationTS) {
+			lastTaskCreationTS = *issue.CreatedAt
+		}
+	}
+
+	return lastTaskCreationTS
+}
+
+func (b *BaseTask) getNextCreationTimestamp(lastTaskCreationTS time.Time) time.Time {
+	// Set up cron job parser.
+	cp := cron.NewParser(cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)
+
+	schedule, err := cp.Parse(b.cron)
+	if err != nil {
+		b.log("Failed to parse cron string: " + err.Error())
+
+		return lastTaskCreationTS
+	}
+
+	return schedule.Next(lastTaskCreationTS)
+}
+
 func (b *BaseTask) log(message string) {
 	log.Println("Task '" + b.title + "': " + message)
 }
@@ -46,7 +77,7 @@ func (b *BaseTask) log(message string) {
 // Run executes task procedure.
 func (b *BaseTask) Run() {
 	// Get similar tasks.
-	issues, err := b.client.GetIssuesByTitle(b.projectID, b.title)
+	issues, err := b.getIssues()
 	if err != nil {
 		b.log("Error while getting issues from Gitlab: " + err.Error())
 
@@ -65,28 +96,15 @@ func (b *BaseTask) Run() {
 	b.log("No still opened tasks found, checking if we should create new one...")
 
 	// Get latest task creation timestamp from Gitlab.
-	lastTaskCreationTS := b.executionStartTimestamp
-
-	for _, issue := range issues {
-		if issue.ClosedAt != nil && issue.CreatedAt.After(lastTaskCreationTS) {
-			lastTaskCreationTS = *issue.CreatedAt
-		}
-	}
+	lastTaskCreationTS := b.getLastCreationTimestamp(issues)
 
 	b.log("Last task creation timestamp: " + lastTaskCreationTS.String())
 
-	// Set up cron job parser.
-	cp := cron.NewParser(cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)
-
-	schedule, err := cp.Parse(b.cron)
-	if err != nil {
-		b.log("Failed to parse cron string: " + err.Error())
-
+	// Figure out next task creation and deadline timestamps.
+	nextCreationTS := b.getNextCreationTimestamp(lastTaskCreationTS)
+	if nextCreationTS.Equal(lastTaskCreationTS) {
 		return
 	}
-
-	// Figure out next task creation and deadline timestamps.
-	nextCreationTS := schedule.Next(lastTaskCreationTS)
 
 	// Check if task should be created and create if so.
 	if nextCreationTS.Before(time.Now()) {
