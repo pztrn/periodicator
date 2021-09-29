@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0]
+
 ### Added
 
 - License information. We're on MIT.
@@ -21,4 +23,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release with ability to create issues on Gitlab (both hosted and self-hosted).
 
 [Unreleased]: https://gitlab.pztrn.name/pztrn/periodicator/-/compare/v0.1.0...master
+[0.2.0]: https://gitlab.pztrn.name/pztrn/periodicator/-/compare/v0.1.0...v0.2.0
 [0.1.0]: https://gitlab.pztrn.name/pztrn/periodicator/-/releases/v0.1.0
