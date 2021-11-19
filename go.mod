@@ -9,7 +9,6 @@ require (
 )
 
 require (
-	github.com/adhocore/gronx v0.2.5 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
