@@ -7,7 +7,7 @@ import (
 // PrintCreationTSes prints tasks creation timestamps.
 func PrintCreationTSes(client *gitlab.Client, tasks []Config) {
 	for _, task := range tasks {
-		t := &BaseTask{
+		taskData := &BaseTask{
 			client:                  client,
 			projectID:               task.ProjectID,
 			title:                   task.Title,
@@ -20,19 +20,19 @@ func PrintCreationTSes(client *gitlab.Client, tasks []Config) {
 
 		// Get similar tasks.
 		// ToDo: refactor?
-		issues, err := t.getIssues()
+		issues, err := taskData.getIssues()
 		if err != nil {
 			panic("Error while getting issues from Gitlab: " + err.Error())
 		}
 
-		t.log(t.getNextCreationTimestamp(t.getLastCreationTimestamp(issues)).String())
+		taskData.log(taskData.getNextCreationTimestamp(taskData.getLastCreationTimestamp(issues)).String())
 	}
 }
 
 // Process processes passed tasks.
 func Process(client *gitlab.Client, tasks []Config) {
 	for _, task := range tasks {
-		t := &BaseTask{
+		taskData := &BaseTask{
 			client:                  client,
 			projectID:               task.ProjectID,
 			title:                   task.Title,
@@ -43,6 +43,6 @@ func Process(client *gitlab.Client, tasks []Config) {
 			dueIn:                   task.DueIn,
 		}
 
-		t.Run()
+		taskData.Run()
 	}
 }

@@ -11,15 +11,13 @@ import (
 
 // BaseTask is a base task structure.
 type BaseTask struct {
-	client *gitlab.Client
-
-	projectID int
-	title     string
-	body      string
-	tags      []string
-
 	executionStartTimestamp time.Time
+	client                  *gitlab.Client
+	title                   string
+	body                    string
 	cron                    string
+	tags                    []string
+	projectID               int
 	dueIn                   time.Duration
 }
 

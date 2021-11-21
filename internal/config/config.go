@@ -46,11 +46,11 @@ func Parse() *Config {
 	}
 
 	// nolint:exhaustivestruct
-	c := &Config{}
+	cfg := &Config{}
 
-	if err := yaml.Unmarshal(data, c); err != nil {
+	if err := yaml.Unmarshal(data, cfg); err != nil {
 		panic("Failed to unmarshal YAML data: " + err.Error())
 	}
 
-	return c
+	return cfg
 }

@@ -29,12 +29,12 @@ func main() {
 
 	cfg := config.Parse()
 
-	c := gitlab.NewGitlabClient(&cfg.Gitlab)
+	gitlabClient := gitlab.NewGitlabClient(&cfg.Gitlab)
 
 	if *showNextCreationTS {
-		tasks.PrintCreationTSes(c, cfg.Tasks)
+		tasks.PrintCreationTSes(gitlabClient, cfg.Tasks)
 		os.Exit(0)
 	}
 
-	tasks.Process(c, cfg.Tasks)
+	tasks.Process(gitlabClient, cfg.Tasks)
 }

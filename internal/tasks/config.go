@@ -5,12 +5,12 @@ import "time"
 // Config is a task's configuration as should be defined in configuration file.
 // nolint:tagliatelle
 type Config struct {
-	ProjectID      int           `yaml:"project_id"`
+	ExecutionStart TaskStartTime `yaml:"execution_start"`
 	Title          string        `yaml:"title"`
 	Body           string        `yaml:"body"`
-	Tags           []string      `yaml:"tags"`
-	ExecutionStart TaskStartTime `yaml:"execution_start"`
 	Cron           string        `yaml:"cron"`
+	Tags           []string      `yaml:"tags"`
+	ProjectID      int           `yaml:"project_id"`
 	DueIn          time.Duration `yaml:"due_in"`
 }
 
@@ -30,14 +30,14 @@ func (tts *TaskStartTime) UnmarshalYAML(unmarshal func(interface{}) error) error
 		return err
 	}
 
-	t, err := time.Parse("2006-01-02 15:04:05", timeData)
+	timeField, err := time.Parse("2006-01-02 15:04:05", timeData)
 	if err != nil {
 		// ToDo: fix it!
 		// nolint:wrapcheck
 		return err
 	}
 
-	tts.ts = t
+	tts.ts = timeField
 
 	return nil
 }
