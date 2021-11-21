@@ -17,7 +17,7 @@ Head over releases page, grab your binary and configure your system to start bin
 Compose a configuration file (read below) and add this to your cron:
 
 ```shell
-docker run --rm -v ./config.yaml:/periodicator.yaml registry.gitlab.pztrn.name/pztrn/periodicator:latest
+docker run --rm -v ./config.yaml:/periodicator.yaml pztrn/periodicator:latest
 ```
 
 ## Configuring
