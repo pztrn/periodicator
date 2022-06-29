@@ -45,7 +45,7 @@ func Parse() *Config {
 		panic("Failed to read configuration file data: " + readErr.Error())
 	}
 
-	// nolint:exhaustivestruct
+	// nolint:exhaustruct
 	cfg := &Config{}
 
 	if err := yaml.Unmarshal(data, cfg); err != nil {

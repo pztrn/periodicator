@@ -16,7 +16,7 @@ type Client struct {
 
 // NewGitlabClient creates new Gitlab's client controlling structure.
 func NewGitlabClient(cfg *Config) *Client {
-	// nolint:exhaustivestruct
+	// nolint:exhaustruct
 	c := &Client{
 		config: cfg,
 	}
@@ -43,7 +43,7 @@ func (c *Client) GetClient() *gitlab.Client {
 // GetIssuesByTitle returns list of issues that matches passed title in specific
 // project.
 func (c *Client) GetIssuesByTitle(projectID int, title string) ([]*gitlab.Issue, error) {
-	// nolint:exhaustivestruct
+	// nolint:exhaustruct
 	issues, resp, err := c.client.Issues.ListProjectIssues(projectID, &gitlab.ListProjectIssuesOptions{
 		ListOptions: gitlab.ListOptions{
 			PerPage: 1000,

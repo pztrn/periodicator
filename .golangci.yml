@@ -16,6 +16,8 @@ linters:
     - testpackage
     # Crashes a lot.
     - gci
+    # Deprecated.
+    - exhaustivestruct
 linters-settings:
   lll:
     line-length: 128

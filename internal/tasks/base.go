@@ -123,7 +123,7 @@ func (b *BaseTask) Run() {
 
 		b.log("Found no opened tasks and task should be created, doing so. Task deadline: " + nextDeadlineTS.String())
 
-		// nolint:exhaustivestruct
+		// nolint:exhaustruct
 		err := b.client.CreateIssue(b.projectID, &g.CreateIssueOptions{
 			Title:       &b.title,
 			Description: &b.body,
